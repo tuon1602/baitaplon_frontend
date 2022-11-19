@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from 'styled-components'
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width:100%;
@@ -21,7 +24,8 @@ const Logo = styled.image`
   height:100px;
 `
 const Text = styled.p`
-
+  text-align:center;
+  color:red;
 `
 const Input = styled.input`
   padding:15px 20px;
@@ -42,15 +46,40 @@ const Button = styled.button`
   }
 `
 const SignUp = () => {
+  const [register,setRegister] = useState({
+    email: " ",
+    username:" ",
+    password:" ",
+  })
+  const [errorMessage,setErrorMessage] =useState(" ")
+  console.log(register)
+  const handleRegister =(e) =>{
+    e.preventDefault()
+    axios.post("http://localhost:6969/api/create-new-user",{
+      email:register.email,
+      password:register.password,
+      username:register.username
+    }).then(res =>setErrorMessage(res.data.errMessage)).catch(err =>console.error(err))
+  }
+  useEffect(()=>{
+    if(errorMessage==="ok"){
+      navigate('/login')
+    }
+  },[errorMessage])
+  const navigate= useNavigate()
+  const handleLogin =()=>{
+    navigate('/login')
+  }
   return (
     <Wrapper>
       <Container width={300} height={400}>
         <Logo src="../logo/logo.png" />
-        <Input placeholder="Username" type="text" />
-        <Input placeholder="Email" type="email"/>
-        <Input placeholder="Password" type="password" />
-        <Button>Register</Button>
-        <Button>Login</Button>
+        <Input placeholder="Email" type="text" name='email' required onChange={(e)=>setRegister({...register,email:e.target.value})} />
+        <Input placeholder="Username" type="text" name='username'required onChange={(e)=>setRegister({...register,username:e.target.value})}/>
+        <Input placeholder="Password" type="password" name='password' required onChange={(e)=>setRegister({...register,password:e.target.value})}/>
+        <Text>{errorMessage}</Text>
+        <Button onClick={handleRegister}>Register</Button>
+        <Button onClick={handleLogin}>Login</Button>
       </Container>
     </Wrapper>
   );

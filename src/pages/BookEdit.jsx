@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useState,useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -68,6 +72,50 @@ const Footer = styled.div`
 `
 
 const BookEdit = () => {
+  const navigate = useNavigate()
+  const [bookDetail,setBookDetail] = useState({
+    name:" ",
+    author: " ",
+    description:" ",
+    createdAt: " ",
+    pageCounter: " ",
+    category:" ",
+  })
+  console.log(bookDetail)
+  const[message,setMessage] = useState(" ")
+  const handleCreateBook = (e)=>{
+      e.preventDefault()
+      axios.post("http://localhost:6969/api/create-new-book",{
+        name:bookDetail.name,
+        author: bookDetail.author,
+        description:bookDetail.description,
+        createdAt: bookDetail.createdAt,
+        pageCounter:bookDetail.pageCounter,
+        category:bookDetail.category,
+      }).then(res=>setMessage(res.data.errMessage)).catch(err=>console.error(err))
+    }
+    useEffect(()=>{
+      if(message==="ok"){
+        navigate('/')
+      }
+    },[message])
+    
+    const handleUpdateBook =(e)=>{
+      e.preventDefault()
+      axios.put("http://localhost:6969/api/edit-book",{
+        name:bookDetail.name,
+        author: bookDetail.author,
+        description:bookDetail.description,
+        createdAt: bookDetail.createdAt,
+        pageCounter:bookDetail.pageCounter,
+        category:bookDetail.category,
+      }).then(res=>console.log(res)).catch(err=>console.error(err))
+    }
+    // useEffect(()=>{
+    //   if(message==='updated'){
+    //     navigate('/')
+    //   }
+    // },[message])
   return (
     <Wrapper>
       <Title>Sách</Title>
@@ -76,33 +124,33 @@ const BookEdit = () => {
           <Flex_Column_Wrapper>
             <Flex_column right={40}>
               <Label bottom={20}>Tiêu đề</Label>
-              <Input />
+              <Input required type='text' name='name' onChange={(e)=>setBookDetail({...bookDetail,name:e.target.value})}/>
             </Flex_column>
             <Flex_column>
               <Label bottom={20}>Tác giả</Label>
-              <Input />
+              <Input type='text' name='author' onChange={(e)=>setBookDetail({...bookDetail,author:e.target.value})} />
             </Flex_column>
           </Flex_Column_Wrapper>
           <Flex_Column_Wrapper top={20}>
             <Flex_column>
               <Label bottom={20}>Mô tả về sách</Label>
-              <Input height={200} />
+              <Input height={200}type='text' name='description' onChange={(e)=>setBookDetail({...bookDetail,description:e.target.value})}/>
             </Flex_column>
           </Flex_Column_Wrapper>
           <Flex_Column_Wrapper top={20}>
             <Flex_column right={40}>
               <Label bottom={20}>Ngày phát hành</Label>
-              <Input />
+              <Input type='text' name='createdAt' onChange={(e)=>setBookDetail({...bookDetail,createdAt:e.target.value})}/>
             </Flex_column>
             <Flex_column>
               <Label bottom={20}>Số trang</Label>
-              <Input />
+              <Input type='text' name='pageCounter' onChange={(e)=>setBookDetail({...bookDetail,pageCounter:e.target.value})}/>
             </Flex_column>
           </Flex_Column_Wrapper>
           <Flex_Column_Wrapper top={20}>
             <Flex_column right={40}>
               <Label bottom={20}>Thể loại</Label>
-              <Input />
+              <Input type='text' name='category'onChange={(e)=>setBookDetail({...bookDetail,category:e.target.value})}/>
             </Flex_column>
           </Flex_Column_Wrapper>
         </Information1>
@@ -117,8 +165,8 @@ const BookEdit = () => {
       </InformationWrapper>
       <Footer top={30}>
           <Button>Edit</Button>
-          <Button>Add</Button>
-          <Button>Save</Button>
+          <Button onClick={handleCreateBook}>Add</Button>
+          <Button onClick={handleUpdateBook}>Save</Button>
       </Footer>
     </Wrapper>
   );

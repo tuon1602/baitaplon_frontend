@@ -1,30 +1,45 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button';
+import { Button } from 'react-bootstrap';
 import styled from 'styled-components'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const ButtonStyled = styled.button`
-
+  padding: 0 20px;
 `
 
 function MainPage() {
-
+  const navigate = useNavigate()
   const [Books, setBook] = useState([]);
   const getData = async () => {
-    const data = (await axios.get("http://localhost:6969/api/get-all-books")).data;
-    setBook(data.data);
+    const data = await axios.get("http://localhost:6969/api/get-all-books")
+    setBook(data.data.books);
   };
   useEffect(() => {
     getData();
   }, []);
 
+  const handleEditNavigate= ()=>{
+    navigate('/edit-book')
+  }
+  const handleLoginNavigate= ()=>{
+    navigate('/login')
+  }
+  const handleDeleteBook =(book)=>{
+    console.log("onelick",book)
+    axios.delete('http://localhost:6969/api/delete-book',{
+      data:{
+        id:book.id
+      }
+    }).then(getData())
+  }
   return (
     <div style={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
         <h1>BookManager</h1>
-        <ButtonStyled>AddBook</ButtonStyled>
-        <ButtonStyled>Login</ButtonStyled>
+        <ButtonStyled onClick={handleEditNavigate}>AddBook</ButtonStyled>
+        <ButtonStyled onClick={handleLoginNavigate}>Login</ButtonStyled>
         {/* <Button></Button> */}
 
         <Table striped bordered hover variant="dark">
@@ -50,8 +65,8 @@ function MainPage() {
               <td>{item.pageCounter}</td>
               <td>{item.image}</td>
               <td>
-              <Button variant="primary">Edit</Button>{' '}
-              <Button variant="danger">Delete</Button>{' '}
+              <Button variant="primary" onClick={handleEditNavigate}>Edit</Button>{' '}
+              <Button variant="danger"onClick={()=>handleDeleteBook(item)}>Delete</Button>{' '}
               </td>
             </tr>
           ))}

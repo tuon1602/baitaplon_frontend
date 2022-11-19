@@ -1,9 +1,10 @@
 import axios from 'axios'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState,useEffect} from 'react'
 import { Form, Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import LogoImage from '../logo/logo.png'
 import MainPage from './MainPage'
+
 
 const Wrapper = styled.div`
   width:100%;
@@ -25,7 +26,8 @@ const Logo = styled.image`
   height:100px;
 `
 const Text = styled.p`
-
+  color:red;
+  text-align:center;
 `
 const Input = styled.input`
   padding:15px 20px;
@@ -49,29 +51,39 @@ const FormHandle = styled.form`
   width:100%;
 `
 const LogIn = () => {
+  const navigate=useNavigate()
   const [login,setLogin] = useState({
     email:" ",
     password: " ",
   })
+  const [message,setMessage] = useState('')
   const handleSubmit=(e) =>{
     e.preventDefault()
     axios.post("http://localhost:6969/api/login",{
       email:login.email,
       password:login.password
-    }).then(res =>console.log(res)).catch(err =>console.error(err))
+    }).then(res =>setMessage(res.data.message)).catch(err =>console.error(err))
+  }
+  useEffect(()=>{
+    if(message==="ok"){
+      navigate('/')
+    }
+  },[message])
+  
+  const handleRegister= ()=>{
+    navigate('/register')
   }
   return (
-    <FormHandle>
     <Wrapper>
       <Container width={300} height={400}>
           <Logo src="../logo/logo.png"/>
           <Input placeholder='Email' type='text' name='email' required onChange={(e)=>setLogin({...login,email:e.target.value})}/>
-          <Input placeholder='Password' type='password' name='password' required onchange={(e)=>setLogin({...login,password:e.target.value})}/>
+          <Input placeholder='Password' type='password' name='password' required onChange={(e)=>setLogin({...login,password:e.target.value})}/>
+          <Text>{message}</Text>
           <Button onClick={handleSubmit}>Login</Button>
-          <Button>Register</Button>
+          <Button onClick={handleRegister}>Register</Button>
       </Container>
     </Wrapper>
-    </FormHandle>
  
   )
 }
