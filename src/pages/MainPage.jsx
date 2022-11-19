@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import './table.css'
 const ButtonStyled = styled.button`
   padding: 0 20px;
   width: ${props => props.width}px;
@@ -39,8 +40,8 @@ function MainPage() {
   }, []);
 
   const handleEditNavigate= (bookId)=>{
-    navigate('/edit-book')
-    console.log(bookId)
+    navigate('/edit-book',{state:{id:bookId}})
+    console.log()
   }
   const handleLoginNavigate= ()=>{
     navigate('/login')
@@ -79,6 +80,7 @@ function MainPage() {
               <th>Page Counter</th>
               <th>Date Added</th>
               <th>image</th>
+              <th>Configuration</th>
             </tr>
           </thead>
           <tbody>

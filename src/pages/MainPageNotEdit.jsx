@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import './table.css'
 const ButtonStyled = styled.button`
   padding: 0 20px;
   width: ${props => props.width}px;

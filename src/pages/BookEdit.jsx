@@ -1,8 +1,8 @@
-import React from "react";
+import React, { cloneElement } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useState,useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate,useLocation} from "react-router-dom";
 
 
 const Wrapper = styled.div`
@@ -74,15 +74,20 @@ const Footer = styled.div`
 const BookEdit = () => {
   const navigate = useNavigate()
   const [bookDetail,setBookDetail] = useState({
+    id: " ",
     name:" ",
     author: " ",
     description:" ",
     createdAt: " ",
     pageCounter: " ",
-    category:" ",
+    category:" ", 
   })
   console.log(bookDetail)
   const[message,setMessage] = useState(" ")
+  const {state} = useLocation();
+  const id = state.id
+  bookDetail.id = id
+  console.log(bookDetail)
   const handleCreateBook = (e)=>{
       e.preventDefault()
       axios.post("http://localhost:6969/api/create-new-book",{
@@ -92,30 +97,30 @@ const BookEdit = () => {
         createdAt: bookDetail.createdAt,
         pageCounter:bookDetail.pageCounter,
         category:bookDetail.category,
-      }).then(res=>console.log(res.data)).catch(err=>console.error(err))
+      }).then(res=>setMessage(res.data.errMessage)).catch(err=>console.error(err))
     }
-    // useEffect(()=>{
-    //   if(message==="ok"){
-    //     navigate('/')
-    //   }
-    // },[message])
-    
+    useEffect(()=>{
+      if(message==="ok"){
+        navigate('/mainpage-edit')
+      }
+    },[message])
     const handleUpdateBook =(e)=>{
       e.preventDefault()
       axios.put("http://localhost:6969/api/edit-book",{
+        id:bookDetail.id,
         name:bookDetail.name,
         author: bookDetail.author,
         description:bookDetail.description,
         createdAt: bookDetail.createdAt,
         pageCounter:bookDetail.pageCounter,
         category:bookDetail.category,
-      }).then(res=>console.log(res)).catch(err=>console.error(err))
+      }).then(res=>setMessage(res.data.message)).catch(err=>console.error(err))
     }
-    // useEffect(()=>{
-    //   if(message==='updated'){
-    //     navigate('/')
-    //   }
-    // },[message])
+    useEffect(()=>{
+      if(message==='updated'){
+        navigate('/mainpage-edit')
+      }
+    },[message])
   return (
     <Wrapper>
       <Title>Sách</Title>

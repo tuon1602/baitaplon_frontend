@@ -19,9 +19,8 @@ const Container = styled.div`
   display:flex;
   flex-direction:column;
 `
-const Logo = styled.image`
-  width:100px;
-  height:100px;
+const Brand = styled.h1`
+  text-align:center;
 `
 const Text = styled.p`
   text-align:center;
@@ -72,8 +71,8 @@ const SignUp = () => {
   }
   return (
     <Wrapper>
-      <Container width={300} height={400}>
-        <Logo src="../logo/logo.png" />
+      <Container width={300} height={500}>
+        <Brand>Welcome to BookService</Brand>
         <Input placeholder="Email" type="text" name='email' required onChange={(e)=>setRegister({...register,email:e.target.value})} />
         <Input placeholder="Username" type="text" name='username'required onChange={(e)=>setRegister({...register,username:e.target.value})}/>
         <Input placeholder="Password" type="password" name='password' required onChange={(e)=>setRegister({...register,password:e.target.value})}/>

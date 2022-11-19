@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import LogoImage from '../logo/logo.png'
 import MainPage from './MainPage'
 
-
 const Wrapper = styled.div`
   width:100%;
   height:100%;
@@ -21,9 +20,8 @@ const Container = styled.div`
   display:flex;
   flex-direction:column;
 `
-const Logo = styled.image`
-  width:100px;
-  height:100px;
+const Brand = styled.h1`
+  text-align:center;
 `
 const Text = styled.p`
   color:red;
@@ -76,7 +74,7 @@ const LogIn = () => {
   return (
     <Wrapper>
       <Container width={300} height={400}>
-          <Logo src="../logo/logo.png"/>
+          <Brand>BookService</Brand>
           <Input placeholder='Email' type='text' name='email' required onChange={(e)=>setLogin({...login,email:e.target.value})}/>
           <Input placeholder='Password' type='password' name='password' required onChange={(e)=>setLogin({...login,password:e.target.value})}/>
           <Text>{message}</Text>
