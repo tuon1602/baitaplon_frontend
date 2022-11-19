@@ -66,7 +66,7 @@ const LogIn = () => {
   }
   useEffect(()=>{
     if(message==="ok"){
-      navigate('/')
+      navigate('/mainpage-edit')
     }
   },[message])
   

@@ -92,13 +92,13 @@ const BookEdit = () => {
         createdAt: bookDetail.createdAt,
         pageCounter:bookDetail.pageCounter,
         category:bookDetail.category,
-      }).then(res=>setMessage(res.data.errMessage)).catch(err=>console.error(err))
+      }).then(res=>console.log(res.data)).catch(err=>console.error(err))
     }
-    useEffect(()=>{
-      if(message==="ok"){
-        navigate('/')
-      }
-    },[message])
+    // useEffect(()=>{
+    //   if(message==="ok"){
+    //     navigate('/')
+    //   }
+    // },[message])
     
     const handleUpdateBook =(e)=>{
       e.preventDefault()
@@ -140,11 +140,11 @@ const BookEdit = () => {
           <Flex_Column_Wrapper top={20}>
             <Flex_column right={40}>
               <Label bottom={20}>Ngày phát hành</Label>
-              <Input type='text' name='createdAt' onChange={(e)=>setBookDetail({...bookDetail,createdAt:e.target.value})}/>
+              <Input type='date' name='createdAt' onChange={(e)=>setBookDetail({...bookDetail,createdAt:e.target.value})}/>
             </Flex_column>
             <Flex_column>
               <Label bottom={20}>Số trang</Label>
-              <Input type='text' name='pageCounter' onChange={(e)=>setBookDetail({...bookDetail,pageCounter:e.target.value})}/>
+              <Input type='number' name='pageCounter' onChange={(e)=>setBookDetail({...bookDetail,pageCounter:e.target.value})}/>
             </Flex_column>
           </Flex_Column_Wrapper>
           <Flex_Column_Wrapper top={20}>
@@ -156,7 +156,7 @@ const BookEdit = () => {
         </Information1>
         <Information2>
           <Flex_Column_Wrapper >
-            <Input placeholder="Upload"/>
+            <Input placeholder="Upload" type="file"/>
           </Flex_Column_Wrapper>
           <Flex_Column_Wrapper top={15}>
             <Input width={400} height={450}/>

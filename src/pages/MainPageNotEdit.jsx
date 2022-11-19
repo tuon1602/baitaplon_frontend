@@ -27,7 +27,7 @@ const SetStyled = styled.div`
   margin-bottom:40px;
 `
 
-function MainPage() {
+function MainPageNotEdit() {
   const navigate = useNavigate()
   const [Books, setBook] = useState([]);
   const getData = async () => {
@@ -53,17 +53,12 @@ function MainPage() {
       }
     }).then(getData())
   }
-  const handleLogout=()=>{
-    navigate('/')
-  }
   return (
     <div style={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
         <h1 style={{textAlign:'center'}}>BookManager</h1>
         <SetStyled>
-          <ButtonStyled onClick={handleEditNavigate} width={100} height={30}>AddBook</ButtonStyled>
-          {/* <ButtonStyled onClick={handleLoginNavigate}width={100} height={30}>Login</ButtonStyled> */}
-          <ButtonStyled onClick={handleLogout}width={100} height={30}>LogOut</ButtonStyled>
-
+          {/* <ButtonStyled onClick={handleEditNavigate} width={100} height={30}>AddBook</ButtonStyled> */}
+          <ButtonStyled onClick={handleLoginNavigate}width={100} height={30}>Login</ButtonStyled>
         </SetStyled>
         
         {/* <Button></Button> */}
@@ -92,10 +87,6 @@ function MainPage() {
                   <td>{item.pageCounter}</td>
                   <td>{item.createdAt}</td>
                   <td>{item.image}</td>
-                  <td>
-                  <ButtonStyled height={40} width={70} variant="primary" onClick={()=>handleEditNavigate(item.id)}>Edit</ButtonStyled>
-                  <ButtonStyled height={40} width={80} variant="danger"onClick={()=>handleDeleteBook(item)}>Delete</ButtonStyled>
-                  </td>
                 </tr>
               ))}
           </tbody>
@@ -104,4 +95,4 @@ function MainPage() {
   )
 }
 
-export default MainPage
+export default MainPageNotEdit

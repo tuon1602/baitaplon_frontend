@@ -2,7 +2,7 @@ import React from 'react'
 
 function NotFoundPage() {
   return (
-    <div style={{fontSize:50}}>404 Not Found</div>
+    <div style={{fontSize:50,textAlign:'center'}}>404 Not Found</div>
   )
 }
 

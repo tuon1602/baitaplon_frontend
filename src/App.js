@@ -4,16 +4,18 @@ import MainPage from "./pages/MainPage";
 import SignUp from "./pages/SignUp";
 import NotFoundPage from "./pages/NotFoundPage";
 import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
+import MainPageNotEdit from "./pages/MainPageNotEdit";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainPage/>}/>
+          <Route path="/mainpage-edit" element={<MainPage/>}/>
           <Route path="/login" element={<LogIn/>}/>
           <Route path="/register" element={<SignUp/>}/>
           <Route path="/edit-book" element={<BookEdit/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
+          <Route path="/" element={<MainPageNotEdit/>}/>
         </Routes>
       </BrowserRouter>
     </div>
