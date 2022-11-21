@@ -41,10 +41,7 @@ function MainPage() {
 
   const handleEditNavigate= (bookId)=>{
     navigate('/edit-book',{state:{id:bookId}})
-    console.log()
-  }
-  const handleLoginNavigate= ()=>{
-    navigate('/login')
+    console.log(bookId)
   }
   const handleDeleteBook =(book)=>{
     console.log("onelick",book)
@@ -57,11 +54,14 @@ function MainPage() {
   const handleLogout=()=>{
     navigate('/')
   }
+  const handleAddBookNavigate = ()=>{
+    navigate('/add-book')
+  }
   return (
     <div style={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
         <h1 style={{textAlign:'center'}}>BookManager</h1>
         <SetStyled>
-          <ButtonStyled onClick={handleEditNavigate} width={100} height={30}>AddBook</ButtonStyled>
+          <ButtonStyled onClick={handleAddBookNavigate} width={100} height={30}>AddBook</ButtonStyled>
           {/* <ButtonStyled onClick={handleLoginNavigate}width={100} height={30}>Login</ButtonStyled> */}
           <ButtonStyled onClick={handleLogout}width={100} height={30}>LogOut</ButtonStyled>
 

@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import NotFoundPage from "./pages/NotFoundPage";
 import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
 import MainPageNotEdit from "./pages/MainPageNotEdit";
+import BookAdd from "./pages/BookAdd";
 function App() {
   return (
     <div className="App">
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<LogIn/>}/>
           <Route path="/register" element={<SignUp/>}/>
           <Route path="/edit-book" element={<BookEdit/>}/>
+          <Route path="/add-book" element={<BookAdd/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
           <Route path="/" element={<MainPageNotEdit/>}/>
         </Routes>
