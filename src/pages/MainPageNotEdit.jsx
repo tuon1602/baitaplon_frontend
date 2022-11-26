@@ -67,7 +67,7 @@ function MainPageNotEdit() {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>ID</th>
+              {/* <th>ID</th> */}
               <th>Name</th>
               <th>Description</th>
               <th>Author</th>
@@ -80,7 +80,7 @@ function MainPageNotEdit() {
           <tbody>
           {Books.map((item, index) => (
                 <tr>
-                  <td>{item.id}</td>
+                  {/* <td>{item.id}</td> */}
                   <td>{item.name}</td>
                   <td>{item.description}</td>
                   <td>{item.author}</td>

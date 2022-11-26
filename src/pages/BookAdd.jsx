@@ -70,11 +70,16 @@ const Footer = styled.div`
     justify-content:center;
     
 `
+const Select = styled.select`
+
+`
+const Option = styled.option`
+
+`
 
 const BookAdd = () => {
   const navigate = useNavigate()
   const [bookDetail,setBookDetail] = useState({
-    id: " ",
     name:" ",
     author: " ",
     description:" ",
@@ -82,7 +87,8 @@ const BookAdd = () => {
     pageCounter: " ",
     category:" ", 
   })
-  const[message,setMessage] = useState(" ")
+  console.log(bookDetail)
+  const[message,setMessage] = useState("")
   const handleCreateBook = (e)=>{
       e.preventDefault()
       axios.post("http://localhost:6969/api/create-new-book",{
@@ -92,8 +98,9 @@ const BookAdd = () => {
         createdAt: bookDetail.createdAt,
         pageCounter:bookDetail.pageCounter,
         category:bookDetail.category,
-      }).then(res=>setMessage(res.data.errMessage)).catch(err=>console.error(err))
+      }).then(res=>setMessage(res.data.message.errMessage)).catch(err=>console.error(err))
     }
+    console.log(message)
     useEffect(()=>{
       if(message==="ok"){
         navigate('/mainpage-edit')
@@ -136,7 +143,17 @@ const BookAdd = () => {
           <Flex_Column_Wrapper top={20}>
             <Flex_column right={40}>
               <Label bottom={20}>Thể loại</Label>
-              <Input type='text' name='category'onChange={(e)=>setBookDetail({...bookDetail,category:e.target.value})}/>
+              {/* <Input type='text'/> */}
+              <Select name='category'onChange={(e)=>setBookDetail({...bookDetail,category:e.target.value})}>
+                <Option>Kinh dị</Option>
+                <Option>Học Đường</Option>
+                <Option>Trinh thám</Option>
+                <Option>Tiểu Thuyết</Option>
+                <Option>Hư cấu</Option>
+                <Option>Thiếu nhi</Option>
+                <Option>Chính trị</Option>
+                <Option>Văn học</Option>
+              </Select>
             </Flex_column>
           </Flex_Column_Wrapper>
         </Information1>
