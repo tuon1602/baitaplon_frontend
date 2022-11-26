@@ -70,6 +70,9 @@ const Footer = styled.div`
 `;
 const Select = styled.select``;
 const Option = styled.option``;
+const TextArea = styled.textarea`
+  height:150px;
+`
 
 const BookEdit = () => {
   const navigate = useNavigate();
@@ -165,7 +168,7 @@ const BookEdit = () => {
           <Flex_Column_Wrapper top={20}>
             <Flex_column>
               <Label bottom={20}>Mô tả về sách</Label>
-              <Input
+              <TextArea
                 disabled={inputTrigger}
                 height={200}
                 type="text"
