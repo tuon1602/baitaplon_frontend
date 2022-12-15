@@ -35,6 +35,7 @@ const Flex_column = styled.div`
 const Flex_Column_Wrapper = styled.div`
   display: flex;
   margin-top: ${(props) => props.top}px;
+  margin-left:${(props) => props.left}px;
 `;
 const Information1 = styled.div`
   display: flex;
@@ -77,17 +78,20 @@ const Image = styled.image`
 const TextArea = styled.textarea`
   height: 150px;
 `;
-
+const ValidateText = styled.p`
+  color:red
+`
 const BookAdd = () => {
   const navigate = useNavigate();
-  const [selectImage, setSelectImage] = useState(null);
+  const [image, setImage] = useState("");
   const [bookDetail, setBookDetail] = useState({
     name: " ",
     author: " ",
     description: " ",
-    createdAt: " ",
-    pageCounter: " ",
+    dateCreated: " ",
+    pageCounter: ' ',
     category: " ",
+    image: " "
   });
   console.log(bookDetail);
   const [message, setMessage] = useState("");
@@ -98,22 +102,39 @@ const BookAdd = () => {
         name: bookDetail.name,
         author: bookDetail.author,
         description: bookDetail.description,
-        createdAt: bookDetail.createdAt,
+        dateCreated: bookDetail.dateCreated,
         pageCounter: bookDetail.pageCounter,
         category: bookDetail.category,
+        image:bookDetail.image
       })
       .then((res) => setMessage(res.data.message.errMessage))
       .catch((err) => console.error(err));
   };
-  console.log(message);
   useEffect(() => {
     if (message === "ok") {
+      alert("Create book successful")
       navigate("/mainpage-edit");
     }
   }, [message]);
   const handleReturnHomePage = () => {
     navigate("/mainpage-edit");
   };
+  const onImageChangeTo64 = (event) => {
+    const file = event.target.files[0]
+    // file.preview= URL.createObjectURL(file)
+    // setImage(file)
+    const reader = new FileReader()
+    reader.onloadend = ()=>{
+      setImage(reader.result.toString())
+    } 
+    reader.readAsDataURL(file) 
+   }
+   const handleRemoveImage = ()=>{
+    setImage(" ")
+   }
+   if(image){
+    bookDetail.image = image
+   }
   return (
     <Wrapper>
       <Title>Sách</Title>
@@ -160,9 +181,9 @@ const BookAdd = () => {
               <Label bottom={20}>Ngày phát hành</Label>
               <Input
                 type="date"
-                name="createdAt"
+                name="dateCreated"
                 onChange={(e) =>
-                  setBookDetail({ ...bookDetail, createdAt: e.target.value })
+                  setBookDetail({ ...bookDetail, dateCreated: e.target.value })
                 }
               />
             </Flex_column>
@@ -187,6 +208,7 @@ const BookAdd = () => {
                   setBookDetail({ ...bookDetail, category: e.target.value })
                 }
               >
+                <Option></Option>
                 <Option>Kinh dị</Option>
                 <Option>Học Đường</Option>
                 <Option>Trinh thám</Option>
@@ -200,19 +222,21 @@ const BookAdd = () => {
           </Flex_Column_Wrapper>
         </Information1>
         <Information2>
-          <Flex_Column_Wrapper>
+          <Flex_Column_Wrapper style={{display:"flex",alignItems:"center"}}>
             <Input
           
               placeholder="Upload"
               type="file"
-            
+              onChange={(e)=>onImageChangeTo64(e)}
             />
+            <Button onClick={handleRemoveImage}>Remove</Button>
           </Flex_Column_Wrapper>
-          <Flex_Column_Wrapper top={15}>
-            <Input width={300} height={400} />
+          <Flex_Column_Wrapper top={15} left={100}>
+            {image &&(<img src={image} width="80%"/>)}
           </Flex_Column_Wrapper>
         </Information2>
       </InformationWrapper>
+      <ValidateText style={{textAlign:"center"}}>{message}</ValidateText>
       <Footer top={30}>
         <Button onClick={handleReturnHomePage}>Return to HomePage</Button>
         <Button onClick={handleCreateBook}>Add</Button>

@@ -34,25 +34,25 @@ function MainPage() {
   const getData = async () => {
     const data = await axios.get("http://localhost:6969/api/get-all-books");
     setBook(data.data.books);
+    console.log(data)
   };
   useEffect(() => {
     getData();
   }, []);
-
   const handleEditNavigate = (book) => {
     navigate("/edit-book", { state: { book: book } });
     console.log(book);
   };
   const handleDeleteBook = (book) => {
     // console.log("onelick",book)
-    if (window.confirm("Are you sure") == true) {
+    if (window.confirm("Are you sure") === true) {
       axios
         .delete("http://localhost:6969/api/delete-book", {
           data: {
             id: book.id,
           },
         })
-        .then(getData());
+        .then(getData);
     } else {
       navigate("/mainpage-edit");
     }
@@ -107,8 +107,8 @@ function MainPage() {
               <td>{item.author}</td>
               <td>{item.category}</td>
               <td>{item.pageCounter}</td>
-              <td>{item.createdAt}</td>
-              <td>{item.image}</td>
+              <td>{item.dateCreated}</td>
+              <td><img style={{width:"80%"}} src={item.image}/></td>
               <td>
                 <ButtonStyled
                   height={40}

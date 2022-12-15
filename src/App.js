@@ -6,6 +6,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
 import MainPageNotEdit from "./pages/MainPageNotEdit";
 import BookAdd from "./pages/BookAdd";
+import MainPageUser from "./pages/user/MainPageUser";
+import ViewBookPage from "./pages/user/ViewBookPage";
+import MainPageUserNotLogged from "./pages/user/MainPageUserNotLogged";
+import ViewBookPageNotLogged from "./pages/user/ViewBookPageNotLogged";
+import CartPageUser from "./pages/user/CartPageUser"
+
 function App() {
   return (
     <div className="App">
@@ -18,6 +24,14 @@ function App() {
           <Route path="/add-book" element={<BookAdd/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
           <Route path="/" element={<MainPageNotEdit/>}/>
+          {/* user */}
+          <Route path="/user-main-page" element={<MainPageUser/>}/>
+          <Route path="/user-view-book-page" element={<ViewBookPage/>}/>
+          {/* user not logged */}
+          <Route path="/user-main-page-notlogged" element={<MainPageUserNotLogged/>}/>
+          <Route path="/user-view-book-page-notlogged" element={<ViewBookPageNotLogged/>}/>
+          {/* cart section */}
+          <Route path="/cart" element={<CartPageUser/>}/>
         </Routes>
       </BrowserRouter>
     </div>

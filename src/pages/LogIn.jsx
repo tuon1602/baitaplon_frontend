@@ -54,20 +54,38 @@ const LogIn = () => {
     email:" ",
     password: " ",
   })
+  const [userDetail,setUserDetail] = useState([])
   const [message,setMessage] = useState('')
   const handleSubmit=(e) =>{
-    e.preventDefault()
-    axios.post("http://localhost:6969/api/login",{
+    if(login.email === ' ' || login.password ===' '){
+      alert("Please enter information")
+      return false
+    }
+    else{
+      e.preventDefault()
+     axios.post("http://localhost:6969/api/login",{
       email:login.email,
-      password:login.password
+      password:login.password,
     }).then(res =>setMessage(res.data.message)).catch(err =>console.error(err))
+    }
+    
   }
   useEffect(()=>{
-    if(message==="ok"){
+    // if(userDetail.role == "User"){
+    //   navigate('/user-main-page')
+    // }
+    if(message==="ok" && userDetail.role==="User"){
+      navigate('/user-main-page',{state:{userDetail}})
+    }
+    else if(message==="ok" && userDetail.role==="Admin"){
       navigate('/mainpage-edit')
     }
-  },[message])
-  
+  },[message]) 
+      axios.get("http://localhost:6969/api/get-one-user",{
+      params:{
+        email:login.email
+      }
+    }).then(res => setUserDetail(res.data.user))
   const handleRegister= ()=>{
     navigate('/register')
   }
@@ -80,6 +98,7 @@ const LogIn = () => {
           <Text>{message}</Text>
           <Button onClick={handleSubmit}>Login</Button>
           <Button onClick={handleRegister}>Register</Button>
+
       </Container>
     </Wrapper>
  

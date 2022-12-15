@@ -86,8 +86,8 @@ function MainPageNotEdit() {
                   <td>{item.author}</td>
                   <td>{item.category}</td>
                   <td>{item.pageCounter}</td>
-                  <td>{item.createdAt}</td>
-                  <td>{item.image}</td>
+                  <td>{item.dateCreated}</td>
+                  <td><img src={item.image} style={{width:"70%"}}/></td>
                 </tr>
               ))}
           </tbody>
