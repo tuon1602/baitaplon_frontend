@@ -11,6 +11,7 @@ import ViewBookPage from "./pages/user/ViewBookPage";
 import MainPageUserNotLogged from "./pages/user/MainPageUserNotLogged";
 import ViewBookPageNotLogged from "./pages/user/ViewBookPageNotLogged";
 import CartPageUser from "./pages/user/CartPageUser"
+import BuyPage from "./pages/user/BuyPage";
 
 function App() {
   return (
@@ -23,15 +24,17 @@ function App() {
           <Route path="/edit-book" element={<BookEdit/>}/>
           <Route path="/add-book" element={<BookAdd/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
-          <Route path="/" element={<MainPageNotEdit/>}/>
+          {/* <Route path="/" element={<MainPageNotEdit/>}/> */}
           {/* user */}
           <Route path="/user-main-page" element={<MainPageUser/>}/>
           <Route path="/user-view-book-page" element={<ViewBookPage/>}/>
           {/* user not logged */}
-          <Route path="/user-main-page-notlogged" element={<MainPageUserNotLogged/>}/>
+          <Route path="/" element={<MainPageUserNotLogged/>}/>
           <Route path="/user-view-book-page-notlogged" element={<ViewBookPageNotLogged/>}/>
           {/* cart section */}
           <Route path="/cart" element={<CartPageUser/>}/>
+          {/* buy page */}
+          <Route path="/buy-page" element={<BuyPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

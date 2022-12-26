@@ -80,7 +80,8 @@ const ViewBookPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const book = state.book;
-  const user = state.userDetail.userDetail;
+  const userDetailFromLocal = JSON.parse(localStorage.getItem("userDetail"))
+  const user = userDetailFromLocal;
   // console.log(book.id );
   // for star rating
   const [value, setValue] = React.useState(0);
@@ -108,7 +109,7 @@ const ViewBookPage = () => {
   };
   const handleNavigateLogOut = () => {
     if (window.confirm("Are you sure want to logout?") === true) {
-      navigate("/user-main-page-notlogged");
+      navigate("/");
     }
   };
   const handleNavigateMainPageLogged = () => {
@@ -123,7 +124,7 @@ const ViewBookPage = () => {
     const content = contentChange;
     const rating = value;
     if (contentChange === "" || rating === "") {
-      alert("Bạn phải nhập comment và rating nhé");
+      alert("You must fill in rating and comment");
       return false;
     }
     axios.post("http://localhost:6969/api/post-comment", {
@@ -391,27 +392,27 @@ const ViewBookPage = () => {
                     <Grid alignItems="center">
                       <Typography variant="h5">{item.username}</Typography>
                       {item.rating === 1 ? (
-                        <Typography>Garbage</Typography>
+                        <Typography>Rating: Garbage</Typography>
                       ) : (
                         <Typography></Typography>
                       )}
                       {item.rating === 2 ? (
-                        <Typography>Bad</Typography>
+                        <Typography>Rating: Bad</Typography>
                       ) : (
                         <Typography></Typography>
                       )}
                       {item.rating === 3 ? (
-                        <Typography>Normal</Typography>
+                        <Typography>Rating: Normal</Typography>
                       ) : (
                         <Typography></Typography>
                       )}
                       {item.rating === 4 ? (
-                        <Typography>Good</Typography>
+                        <Typography>Rating: Good</Typography>
                       ) : (
                         <Typography></Typography>
                       )}
                       {item.rating === 5 ? (
-                        <Typography>Excellent</Typography>
+                        <Typography>Rating: Excellent</Typography>
                       ) : (
                         <Typography></Typography>
                       )}

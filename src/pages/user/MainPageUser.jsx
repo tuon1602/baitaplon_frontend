@@ -31,6 +31,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import HistoryIcon from '@mui/icons-material/History';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ViewBookPageContext } from "../../context";
 import { passingUserId } from "../../context";
@@ -78,16 +79,19 @@ const MainPageUser = () => {
   };
   const handleNavigateLogOut = () => {
     if(window.confirm("Are you sure want to logout?") ===true){
-      navigate('/user-main-page-notlogged')
+      navigate('/')
     }
     ;
   }
+  const handleBuyNavigation =() =>{
+    navigate("/buy-page")
+  }
   const navigate = useNavigate();
   const { state } = useLocation();
-  const userDetail = state;
-  const role = state.userDetail.role;
-  const username = state.userDetail.username;
-  const userId = state.userDetail.id
+  const userDetailFromLocal = JSON.parse(localStorage.getItem("userDetail"))
+  const role = userDetailFromLocal.role;
+  const username = userDetailFromLocal.username;
+  const userId = userDetailFromLocal.id
   const getData = async () => {
     const data = await axios.get("http://localhost:6969/api/get-all-books");
     setBook(data.data.books);
@@ -97,7 +101,7 @@ const MainPageUser = () => {
   }, []);
   const handleNavigateViewPage = (book) => {
     navigate("/user-view-book-page", {
-      state: { book: book, userDetail: userDetail },
+      state: { book: book},
     });
   };
   const [viewBookPageData,setViewBookPageData] = useState({
@@ -107,6 +111,7 @@ const MainPageUser = () => {
     navigate('/cart')
   }
   const userIdData = localStorage.setItem("userId",userId)
+  localStorage.setItem("username",username)
   return (
     <>
       <CssBaseline>
@@ -129,6 +134,12 @@ const MainPageUser = () => {
                   <ShoppingCartOutlinedIcon />
                 </Badge>
               </IconButton>
+              <IconButton size="large" color="inherit" onClick={handleBuyNavigation}>
+                <Badge color="cart">
+                  <HistoryIcon />
+                </Badge>
+              </IconButton>
+    
               {auth && (
                 <>
                   <IconButton size="large" color="inherit" onClick={handleMenu}>

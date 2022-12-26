@@ -163,7 +163,6 @@ const BookEdit = () => {
     setBookDetail(prev=>({...prev,image:""}))
    }
 
-  console.log(bookDetail.image)
   return (
     <Wrapper>
       <Title>Sách</Title>

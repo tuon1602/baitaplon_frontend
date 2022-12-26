@@ -75,6 +75,7 @@ const LogIn = () => {
     //   navigate('/user-main-page')
     // }
     if(message==="ok" && userDetail.role==="User"){
+      localStorage.setItem("userDetail",JSON.stringify(userDetail))
       navigate('/user-main-page',{state:{userDetail}})
     }
     else if(message==="ok" && userDetail.role==="Admin"){
